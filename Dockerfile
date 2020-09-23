@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM ubuntu:20.04
 MAINTAINER Imagine ZYL
 
 
@@ -6,15 +6,16 @@ ENV SSH_PASSWORD=111
 
 
 # Install base tool
-RUN yum -y install dstat wget sysstat iputils-ping qemu-user-static
+RUN sudo apt update
+RUN sudo apt -y install dstat wget sysstat iputils-ping qemu-user-static
 
 #install cronie
 
-RUN yum -y install cronie
+RUN sudo apt -y install cronie
 
 #install crontabs
 
-RUN yum -y install crontabs
+RUN sudo apt -y install crontabs
 
 RUN sed -i '/session    required   pam_loginuid.so/c\#session    required   pam_loginuid.so' /etc/pam.d/crond
 RUN echo "*/1 * * * * sh /ttnode-start.sh" >> /var/spool/cron/root
