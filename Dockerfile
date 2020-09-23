@@ -1,3 +1,5 @@
+FROM golang:alpine AS builder
+
 FROM arm64v8/centos:7
 MAINTAINER Imagine ZYL
 
