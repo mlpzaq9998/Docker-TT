@@ -6,16 +6,16 @@ ENV SSH_PASSWORD=111
 
 
 # Install base tool
-RUN sudo apt update
-RUN sudo apt -y install dstat wget sysstat iputils-ping qemu-user-static
+RUN apt update
+RUN apt -y install dstat wget sysstat iputils-ping qemu-user-static
 
 #install cronie
 
-RUN sudo apt -y install cronie
+RUN apt -y install cronie
 
 #install crontabs
 
-RUN sudo apt -y install crontabs
+RUN apt -y install crontabs
 
 RUN sed -i '/session    required   pam_loginuid.so/c\#session    required   pam_loginuid.so' /etc/pam.d/crond
 RUN echo "*/1 * * * * sh /ttnode-start.sh" >> /var/spool/cron/root
