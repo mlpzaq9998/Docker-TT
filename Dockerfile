@@ -1,4 +1,4 @@
-FROM arm64v8/centos:7
+FROM centos:7
 MAINTAINER Imagine ZYL
 ADD qemu-aarch64-static /usr/bin
 
