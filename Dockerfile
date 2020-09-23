@@ -1,10 +1,21 @@
-FROM centos:7
-MAINTAINER Imagine ZYL
-ADD qemu-aarch64-static /usr/bin
+# build stage
+FROM centos:7 as build-stage
 
+# Multi arch build support
+FROM alpine as qemu
+
+ARG QEMU_VERSION="v5.1.0-2"
+
+RUN wget https://github.com/multiarch/qemu-user-static/releases/download/${QEMU_VERSION}/qemu-aarch64-static && chmod +x qemu-aarch64-static
+
+# production stage
+FROM arm64v8/centos:7
+
+MAINTAINER Imagine ZYL
+
+COPY --from=qemu qemu-aarch64-static /usr/bin/
 
 ENV SSH_PASSWORD=111
-
 
 # Install base tool
 RUN yum -y install dstat wget sysstat iputils-ping
