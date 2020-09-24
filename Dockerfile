@@ -21,7 +21,7 @@ RUN apt -y install dstat wget sysstat iputils-ping
 
 RUN apt -y install cron
 
-RUN sed -i '/session    required   pam_loginuid.so/c\#session    required   pam_loginuid.so' /etc/pam.d/crond
+RUN sed -i '/session    required   pam_loginuid.so/c\#session    required   pam_loginuid.so' /etc/pam.d/cron
 RUN echo "*/1 * * * * sh /ttnode-start.sh" >> /var/spool/cron/root
 
 # Install SSH Service
