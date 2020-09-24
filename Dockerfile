@@ -11,8 +11,6 @@ COPY --from=qemu qemu-aarch64-static /usr/bin
 
 MAINTAINER Imagine ZYL
 
-ENV SSH_PASSWORD=111
-
 # Install base tool
 RUN apt update
 RUN apt -y install dstat wget sysstat iputils-ping
@@ -23,11 +21,6 @@ RUN apt -y install cron
 
 RUN sed -i '/session    required   pam_loginuid.so/c\#session    required   pam_loginuid.so' /etc/pam.d/cron
 RUN echo "*/1 * * * * sh /ttnode-start.sh" >> /var/spool/cron/root
-
-# Install SSH Service
-RUN apt install -y openssh-server
-RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config && \
-    echo "${SSH_PASSWORD}" | passwd "root" --stdin
 	
 # Install TT
 COPY sh/* ./sh/
