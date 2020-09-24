@@ -36,6 +36,7 @@ RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config && \
 COPY sh/* ./sh/
 RUN (chmod -R 755 /sh/ )
 COPY ttnode/* ./root/
+RUN (chmod -R 755 /root/ )
 RUN sh /sh/ttnode-init.sh && \
     rm -rf /sh/
 
