@@ -13,7 +13,7 @@ MAINTAINER Imagine ZYL
 
 # Install base tool
 RUN apt update
-RUN apt -y install dstat wget sysstat iputils-ping
+RUN apt -y install dstat wget sysstat iputils-ping tzdate
 
 #install cronie
 
