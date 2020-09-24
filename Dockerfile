@@ -1,8 +1,3 @@
-FROM multiarch/qemu-user-static:x86_64-aarch64 as qemu
-FROM arm64v8/golang:alpine AS builder
-COPY --from=qemu /usr/bin/qemu-aarch64-static /usr/bin
-
-
 FROM arm64v8/centos:7
 MAINTAINER Imagine ZYL
 
