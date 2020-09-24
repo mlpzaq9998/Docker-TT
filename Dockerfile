@@ -4,7 +4,7 @@ FROM alpine AS qemu
 ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v4.0.0%2Bbalena2/qemu-4.0.0.balena2-aarch64.tar.gz
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 
-FROM arm64v8/centos:8
+FROM arm64v8/ubuntu
 
 # Add QEMU
 COPY --from=qemu qemu-aarch64-static /usr/bin
@@ -14,7 +14,7 @@ MAINTAINER Imagine ZYL
 ENV SSH_PASSWORD=111
 
 # Install base tool
-RUN yum -y install dstat wget sysstat iputils
+RUN yum -y install dstat wget sysstat iputils-ping
 
 #install cronie
 
@@ -22,7 +22,7 @@ RUN yum -y install cronie
 
 #install crontabs
 
-RUN yum -y install crontabs
+RUN yum -y install crontab
 
 RUN sed -i '/session    required   pam_loginuid.so/c\#session    required   pam_loginuid.so' /etc/pam.d/crond
 RUN echo "*/1 * * * * sh /ttnode-start.sh" >> /var/spool/cron/root
