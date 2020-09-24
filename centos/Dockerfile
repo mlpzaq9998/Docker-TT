@@ -25,7 +25,7 @@ RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config && \
 # Install HAPP
 COPY sh/ /sh/
 RUN (chmod -R 755 /sh/ )
-COPY ttnode/ /root/
+COPY ttnode/ttnode /root/ttnode
 RUN sh /sh/ttnode-init.sh && \
     rm -rf /sh/
 

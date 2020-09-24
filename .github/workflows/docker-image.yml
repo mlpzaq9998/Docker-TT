@@ -13,7 +13,7 @@ jobs:
       matrix:
         docker-file:
             - path: centos
-              tags: tt
+              tags: latest
               platforms: linux/arm64
 
     steps:
