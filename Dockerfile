@@ -19,7 +19,7 @@ RUN apt -y install dstat wget sysstat iputils-ping
 
 #install cronie
 
-RUN apt -y install cronie
+RUN apt -y install cron
 
 #install crontabs
 
