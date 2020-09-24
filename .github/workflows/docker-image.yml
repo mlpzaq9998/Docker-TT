@@ -1,0 +1,30 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  watch:
+    types: started
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: |
+          docker run --rm --privileged multiarch/qemu-user-static:register --reset
+          docker build . -f Dockerfile -t tt:aarch64-latest
+    - name: Push docker image to Docker Hub
+      env:
+        DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+        DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+      run: |
+          docker login docker.io -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
+          docker tag tt:aarch64-latest docker.io/mlpzaq9998/tt:aarch64-latest
+          docker push docker.io/mlpzaq9998/tt:aarch64-latest
