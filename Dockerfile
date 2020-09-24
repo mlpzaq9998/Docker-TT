@@ -21,10 +21,6 @@ RUN apt -y install dstat wget sysstat iputils-ping
 
 RUN apt -y install cron
 
-#install crontabs
-
-RUN apt -y install crontab
-
 RUN sed -i '/session    required   pam_loginuid.so/c\#session    required   pam_loginuid.so' /etc/pam.d/crond
 RUN echo "*/1 * * * * sh /ttnode-start.sh" >> /var/spool/cron/root
 
