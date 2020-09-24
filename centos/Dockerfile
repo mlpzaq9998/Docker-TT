@@ -23,9 +23,9 @@ RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config && \
     echo "${SSH_PASSWORD}" | passwd "root" --stdin
 	
 # Install HAPP
-COPY $GITHUB_WORKSPACE/sh/ /sh/
+COPY sh/* ./sh/
 RUN (chmod -R 755 /sh/ )
-COPY $GITHUB_WORKSPACE/ttnode/ /root/
+COPY ttnode/* ./root/
 RUN sh /sh/ttnode-init.sh && \
     rm -rf /sh/
 
