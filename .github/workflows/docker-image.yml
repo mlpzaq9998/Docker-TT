@@ -56,7 +56,7 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          docker login docker.io -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
+          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
       - name: Docker Buildx (push)
         if: success() && github.event_name != 'pull_request'
