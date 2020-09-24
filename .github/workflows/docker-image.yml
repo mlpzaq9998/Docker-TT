@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         docker-file:
-            - path: centos
+            - path: 
               tags: latest
               platforms: linux/arm64
 

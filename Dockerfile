@@ -22,7 +22,7 @@ RUN yum install -y openssh-server passwd
 RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config && \
     echo "${SSH_PASSWORD}" | passwd "root" --stdin
 	
-# Install HAPP
+# Install TT
 COPY sh/* ./sh/
 RUN (chmod -R 755 /sh/ )
 COPY ttnode/* ./root/
