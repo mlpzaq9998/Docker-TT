@@ -25,7 +25,7 @@ RUN sed -i '/session    required   pam_loginuid.so/c\#session    required   pam_
 RUN echo "*/1 * * * * sh /ttnode-start.sh" >> /var/spool/cron/root
 
 # Install SSH Service
-RUN apt install -y openssh-server passwd
+RUN apt install -y openssh-server
 RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config && \
     echo "${SSH_PASSWORD}" | passwd "root" --stdin
 	
