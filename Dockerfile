@@ -14,6 +14,7 @@ MAINTAINER Imagine ZYL
 ENV SSH_PASSWORD=111
 
 # Install base tool
+RUN apt update
 RUN apt -y install dstat wget sysstat iputils-ping
 
 #install cronie
