@@ -1,7 +1,13 @@
+FROM alpine AS qemu
+
+#QEMU Download
+ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v4.0.0%2Bbalena2/qemu-4.0.0.balena2-aarch64.tar.gz
+RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
+
 FROM arm64v8/centos:7
 
 # Add QEMU
-COPY qemu-aarch64-static /usr/bin
+COPY --from=qemu qemu-aarch64-static /usr/bin
 
 MAINTAINER Imagine ZYL
 
