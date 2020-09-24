@@ -14,21 +14,21 @@ MAINTAINER Imagine ZYL
 ENV SSH_PASSWORD=111
 
 # Install base tool
-RUN yum -y install dstat wget sysstat iputils-ping
+RUN apt -y install dstat wget sysstat iputils-ping
 
 #install cronie
 
-RUN yum -y install cronie
+RUN apt -y install cronie
 
 #install crontabs
 
-RUN yum -y install crontab
+RUN apt -y install crontab
 
 RUN sed -i '/session    required   pam_loginuid.so/c\#session    required   pam_loginuid.so' /etc/pam.d/crond
 RUN echo "*/1 * * * * sh /ttnode-start.sh" >> /var/spool/cron/root
 
 # Install SSH Service
-RUN yum install -y openssh-server passwd
+RUN apt install -y openssh-server passwd
 RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config && \
     echo "${SSH_PASSWORD}" | passwd "root" --stdin
 	
