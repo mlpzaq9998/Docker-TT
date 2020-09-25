@@ -6,6 +6,7 @@ RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 
 FROM arm64v8/centos:7 AS build
 COPY --from=qemu qemu-aarch64-static /usr/bin
+RUN yum -y install wget
 RUN yum -y groupinstall "Development Tools"
 RUN yum -y install glibc-static libstdc++-static
 RUN wget -P /tmp http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-5.4.0/gcc-5.4.0.tar.bz2
