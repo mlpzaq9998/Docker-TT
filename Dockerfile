@@ -16,6 +16,7 @@ RUN cd build
 RUN ../configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
 RUN make && make install
 
+FROM arm64v8/centos:7
 
 # Add QEMU
 COPY --from=qemu qemu-aarch64-static /usr/bin
