@@ -4,29 +4,10 @@ FROM alpine AS qemu
 ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v4.0.0%2Bbalena2/qemu-4.0.0.balena2-aarch64.tar.gz
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 
-FROM arm64v8/centos:7 AS build
-COPY --from=qemu qemu-aarch64-static /usr/bin
-RUN yum -y install wget
-RUN yum -y groupinstall "Development Tools"
-RUN yum -y install glibc-static libstdc++-static
-RUN wget -P /root http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-5.4.0/gcc-5.4.0.tar.bz2
-WORKDIR /root
-RUN tar jxvf gcc-5.4.0.tar.bz2
-WORKDIR /root/gcc-5.4.0
-RUN ./contrib/download_prerequisites
-RUN mkdir build
-WORKDIR /root/gcc-5.4.0/build
-RUN ../configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
-WORKDIR /root/gcc-5.4.0/build
-RUN make && make install
-
-FROM arm64v8/centos:7
+FROM arm64v8/centos:8
 
 # Add QEMU
 COPY --from=qemu qemu-aarch64-static /usr/bin
-COPY --from=build /usr/local/lib64/libstdc++.so.6.0.21 /lib64
-RUN rm -rf libstdc++.so.6 libstdc++.so.6.0.19
-RUN ln -s libstdc++.so.6.0.21 libstdc++.so.6
 
 MAINTAINER Imagine ZYL
 
