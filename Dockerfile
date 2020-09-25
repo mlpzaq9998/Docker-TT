@@ -34,4 +34,4 @@ RUN sh /sh/ttnode-init.sh && \
 RUN cp -p /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 # Start run
-ENTRYPOINT [ "/usr/sbin/crond","-i","-n" ]
+ENTRYPOINT [ "/usr/sbin/cron","-i","-n" ]
