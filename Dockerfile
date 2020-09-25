@@ -15,7 +15,8 @@ RUN tar jxvf gcc-5.4.0.tar.bz2
 WORKDIR /root/gcc-5.4.0
 RUN ./contrib/download_prerequisites
 RUN mkdir build
-RUN ./configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
+WORKDIR /root/gcc-5.4.0/build
+RUN ../configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
 WORKDIR /root/gcc-5.4.0/build
 RUN make && make install
 
