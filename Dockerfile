@@ -12,11 +12,11 @@ RUN yum -y install glibc-static libstdc++-static
 RUN wget -P /root http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-5.4.0/gcc-5.4.0.tar.bz2
 WORKDIR /root
 RUN tar jxvf gcc-5.4.0.tar.bz2
-WORKDIR /root/gcc-5.4.0/contrib
-RUN ./download_prerequisites
+WORKDIR /root/gcc-5.4.0
+RUN ./contrib/download_prerequisites
 RUN mkdir /home/zyl/gcc-5.4.0/build
+RUN ./configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
 WORKDIR /root/gcc-5.4.0/build
-RUN ../configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
 RUN make && make install
 
 FROM arm64v8/centos:7
