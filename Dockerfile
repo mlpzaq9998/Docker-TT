@@ -9,12 +9,13 @@ COPY --from=qemu qemu-aarch64-static /usr/bin
 RUN yum -y install wget
 RUN yum -y groupinstall "Development Tools"
 RUN yum -y install glibc-static libstdc++-static
-RUN wget -P /tmp http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-5.4.0/gcc-5.4.0.tar.bz2
-RUN tar jxvf /tmp/gcc-5.4.0.tar.bz2
-RUN cd /tmp/gcc-5.4.0
-RUN ./contrib/download_prerequisits
-RUN mkdir build
-RUN cd build
+RUN wget -P /root http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-5.4.0/gcc-5.4.0.tar.bz2
+WORKDIR /root
+RUN tar jxvf gcc-5.4.0.tar.bz2
+WORKDIR /root/gcc-5.4.0/contrib
+RUN ./download_prerequisits
+RUN mkdir /home/zyl/gcc-5.4.0/build
+WORKDIR /root/gcc-5.4.0/build
 RUN ../configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
 RUN make && make install
 
