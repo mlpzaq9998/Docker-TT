@@ -13,7 +13,7 @@ RUN wget -P /root http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-5.4.0/
 WORKDIR /root
 RUN tar jxvf gcc-5.4.0.tar.bz2
 WORKDIR /root/gcc-5.4.0/contrib
-RUN ./download_prerequisits
+RUN ./download_prerequisites
 RUN mkdir /home/zyl/gcc-5.4.0/build
 WORKDIR /root/gcc-5.4.0/build
 RUN ../configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
