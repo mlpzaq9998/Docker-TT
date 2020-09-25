@@ -4,23 +4,33 @@ FROM alpine AS qemu
 ENV QEMU_URL https://github.com/balena-io/qemu/releases/download/v4.0.0%2Bbalena2/qemu-4.0.0.balena2-aarch64.tar.gz
 RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 
-FROM arm64v8/ubuntu
+FROM arm64v8/centos:7
 
 # Add QEMU
 COPY --from=qemu qemu-aarch64-static /usr/bin
 
 MAINTAINER Imagine ZYL
 
+ENV SSH_PASSWORD=111
+
 # Install base tool
-RUN apt update
-RUN apt -y install dstat wget sysstat iputils-ping tzdata
+RUN yum -y install dstat wget sysstat iputils libstdc++-4.8.5-39.el7.aarch64
 
 #install cronie
 
-RUN apt -y install cron
+RUN yum -y install cronie
 
-RUN sed -i '/session    required   pam_loginuid.so/c\#session    required   pam_loginuid.so' /etc/pam.d/cron
+#install crontabs
+
+RUN yum -y install crontabs
+
+RUN sed -i '/session    required   pam_loginuid.so/c\#session    required   pam_loginuid.so' /etc/pam.d/crond
 RUN echo "*/1 * * * * sh /ttnode-start.sh" >> /var/spool/cron/root
+
+# Install SSH Service
+RUN yum install -y openssh-server passwd
+RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config && \
+    echo "${SSH_PASSWORD}" | passwd "root" --stdin
 	
 # Install TT
 COPY sh/* ./sh/
@@ -34,4 +44,4 @@ RUN sh /sh/ttnode-init.sh && \
 RUN cp -p /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 # Start run
-ENTRYPOINT [ "/usr/sbin/cron","-i","-n" ]
+ENTRYPOINT [ "/usr/sbin/crond","-i","-n" ]
