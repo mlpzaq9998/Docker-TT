@@ -1,6 +1,7 @@
 #!/bin/bash
 
-    if [ ! -n "$(ps fax | grep '/ttnode/ttnode -p')" ]; then
-        /root/ttnode -p /ttnode
-    fi
+ps -ef |grep -w '/root/ttnode -p'|grep -v grep|wc -l
+if [ $? -eq 0 ]; then
+    /root/ttnode -p /ttnode
+fi
 
